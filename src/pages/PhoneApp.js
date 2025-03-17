@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import '../styles/PhoneApp.css';
 
-// 나중에 실제 서버 URL로 대체할 예정
-const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
+// 서버 URL
+const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5001';
 
 // 진동 패턴 옵션
 const patternOptions = [
@@ -26,12 +26,6 @@ function PhoneApp() {
   
   // 소켓 연결 초기화
   useEffect(() => {
-    // 실제 배포에서는 여기에 실제 서버 URL을 사용해야 함
-    // 지금은 로컬 개발 중이므로 연결 가능한 서버가 없음을 표시
-    setStatus('개발 모드: 서버 연결 없음');
-    
-    // 아래는 실제 서버 연결 코드 (실제 배포 시 활성화)
-    /*
     const newSocket = io(SERVER_URL);
     
     newSocket.on('connect', () => {
@@ -63,26 +57,12 @@ function PhoneApp() {
     return () => {
       newSocket.disconnect();
     };
-    */
   }, []);
   
   // 진동 명령 전송
   const sendCommand = (type) => {
-    // 개발 모드에서는 로그만 출력
-    console.log(`진동 명령 전송: ${type}, 패턴: ${selectedPattern}, 대상: ${targetWatch}`);
-    
-    // 마지막 명령 업데이트
-    const command = { type, pattern: selectedPattern };
-    setLastCommand(command);
-    
-    // 서버 연결 없이 상태 변경
-    const target = targetWatch === 'all' ? '모든 워치' : `워치 ${targetWatch.substring(0, 6)}...`;
-    setStatus(`${target}에 ${type} 명령 전송 (개발 모드)`);
-    
-    // 아래는 실제 서버 연결 코드 (실제 배포 시 활성화)
-    /*
     if (!socket || !connected) {
-      setStatus('서버에 연결되어 있지 않습니다.');
+      setStatus('서버에 연결되어 있지 않습니다');
       return;
     }
     
@@ -96,9 +76,11 @@ function PhoneApp() {
       command
     });
     
+    // 마지막 명령 업데이트
+    setLastCommand(command);
+    
     const target = targetWatch === 'all' ? '모든 워치' : `워치 ${targetWatch.substring(0, 6)}...`;
     setStatus(`${target}에 ${type} 명령 전송됨`);
-    */
   };
   
   return (
@@ -120,7 +102,7 @@ function PhoneApp() {
                 id="watch-select"
                 value={targetWatch}
                 onChange={(e) => setTargetWatch(e.target.value)}
-                disabled={!connected}
+                disabled={!connected || connectedWatches.length === 0}
               >
                 <option value="all">모든 워치</option>
                 {connectedWatches.map(watchId => (
@@ -131,7 +113,9 @@ function PhoneApp() {
               </select>
             </div>
             <div className="watch-status">
-              개발 모드: 시뮬레이션된 워치 연결
+              {connectedWatches.length > 0 
+                ? `연결된 워치: ${connectedWatches.length}대` 
+                : '연결된 워치 없음'}
             </div>
           </div>
           
@@ -142,6 +126,7 @@ function PhoneApp() {
                 id="pattern-select"
                 value={selectedPattern}
                 onChange={(e) => setSelectedPattern(e.target.value)}
+                disabled={!connected}
               >
                 {patternOptions.map(option => (
                   <option key={option.value} value={option.value}>
@@ -158,24 +143,28 @@ function PhoneApp() {
               <button 
                 className="vib-button"
                 onClick={() => sendCommand('single')}
+                disabled={!connected || connectedWatches.length === 0}
               >
                 단일 진동
               </button>
               <button 
                 className="vib-button"
                 onClick={() => sendCommand('pattern')}
+                disabled={!connected || connectedWatches.length === 0}
               >
                 패턴 진동
               </button>
               <button 
                 className="vib-button"
                 onClick={() => sendCommand('repeated')}
+                disabled={!connected || connectedWatches.length === 0}
               >
                 반복 진동
               </button>
               <button 
                 className="vib-button stop"
                 onClick={() => sendCommand('stop')}
+                disabled={!connected || connectedWatches.length === 0}
               >
                 중지
               </button>
@@ -187,7 +176,7 @@ function PhoneApp() {
           <h2>상태</h2>
           <div className="status-container">
             <div className={`connection-status ${connected ? 'connected' : 'disconnected'}`}>
-              {connected ? '서버 연결됨' : '서버 연결 끊김 (개발 모드)'}
+              {connected ? '서버 연결됨' : '서버 연결 끊김'}
             </div>
             <div className="status-message">{status}</div>
             

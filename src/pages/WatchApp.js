@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import '../styles/WatchApp.css';
 
-// 나중에 실제 서버 URL로 대체할 예정
-const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
+// 서버 URL
+const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5001';
 
 // 진동 패턴 정의
 const vibrationPatterns = {
@@ -17,10 +17,11 @@ const vibrationPatterns = {
 
 function WatchApp() {
   const [connected, setConnected] = useState(false);
-  const [status, setStatus] = useState('개발 모드: 서버 연결 없음');
+  const [status, setStatus] = useState('서버에 연결 중...');
   const [lastCommand, setLastCommand] = useState(null);
   const [testMode, setTestMode] = useState(false);
   const [vibSupported, setVibSupported] = useState(true);
+  const [socket, setSocket] = useState(null);
   const vibrationIntervalRef = useRef(null);
   
   // 브라우저 진동 지원 확인
@@ -31,8 +32,7 @@ function WatchApp() {
     }
   }, []);
   
-  // 소켓 연결 초기화 (실제 배포 시 활성화)
-  /*
+  // 소켓 연결 초기화
   useEffect(() => {
     const newSocket = io(SERVER_URL);
     
@@ -53,7 +53,9 @@ function WatchApp() {
       executeVibration(command);
     });
     
-    // 컴포넌트 언마운트 시 소켓 연결 해제
+    setSocket(newSocket);
+    
+    // 컴포넌트 언마운트 시 정리
     return () => {
       if (vibrationIntervalRef.current) {
         clearInterval(vibrationIntervalRef.current);
@@ -62,19 +64,6 @@ function WatchApp() {
         window.navigator.vibrate(0);
       }
       newSocket.disconnect();
-    };
-  }, []);
-  */
-  
-  // 메모리 누수 방지를 위한 정리
-  useEffect(() => {
-    return () => {
-      if (vibrationIntervalRef.current) {
-        clearInterval(vibrationIntervalRef.current);
-      }
-      if (window.navigator && window.navigator.vibrate) {
-        window.navigator.vibrate(0);
-      }
     };
   }, []);
   
