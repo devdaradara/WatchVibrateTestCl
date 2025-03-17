@@ -1,0 +1,207 @@
+/* src/styles/PhoneApp.css */
+.phone-app {
+  min-height: 100vh;
+  background-color: #f5f5f7;
+}
+
+.phone-app .header {
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.phone-app .header h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.phone-app .back-link {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+}
+
+.phone-app .device-mode {
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.2rem;
+  color: #666;
+}
+
+.phone-app .container {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.control-panel {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.section {
+  padding: 1.25rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.select-container {
+  position: relative;
+}
+
+.select-container select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+.watch-status {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.vibration-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.vib-button {
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #0070f3;
+  color: white;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.vib-button:hover {
+  background-color: #0060df;
+}
+
+.vib-button:active {
+  background-color: #0050cf;
+}
+
+.vib-button.stop {
+  background-color: #ef4444;
+  grid-column: span 2;
+}
+
+.vib-button.stop:hover {
+  background-color: #dc2626;
+}
+
+.vib-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.status-panel {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.status-container {
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.connection-status {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.connection-status.connected {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.connection-status.disconnected {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-message {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.last-command {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.help-section {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 1.25rem;
+}
+
+.help-content {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.help-content p {
+  margin-bottom: 0.75rem;
+}
+
+.note {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #fffbeb;
+  border-left: 3px solid #f59e0b;
+  border-radius: 4px;
+}
+
+/* 태블릿 이상 화면 */
+@media (min-width: 768px) {
+  .vibration-controls {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  
+  .vib-button.stop {
+    grid-column: span 3;
+  }
+}

@@ -1,0 +1,174 @@
+/* src/styles/WatchApp.css */
+.watch-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #262626;
+  padding: 1rem;
+}
+
+.watch-container {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: #111;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.05),
+              0 0 20px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 작은 화면에 맞게 조정 */
+@media (max-width: 360px) {
+  .watch-container {
+    border-radius: 20px;
+  }
+}
+
+.watch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.watch-header .back-link {
+  color: white;
+  font-size: 1.1rem;
+}
+
+.watch-header .title {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.watch-header .test-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.watch-content {
+  height: calc(100% - 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.status-display {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+.connection-indicator {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.connection-indicator.connected {
+  background-color: #10b981;
+}
+
+.connection-indicator.disconnected {
+  background-color: #ef4444;
+}
+
+.status-message {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.command-display {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.command-type {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.command-pattern {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.error-message {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background-color: rgba(239, 68, 68, 0.2);
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.instruction {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.test-controls {
+  width: 100%;
+  color: white;
+}
+
+.test-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.test-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.test-button {
+  padding: 0.75rem 0.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.8rem;
+  transition: background-color 0.2s;
+}
+
+.test-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.test-button:active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.test-button.stop {
+  grid-column: span 2;
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.test-button.stop:hover {
+  background-color: rgba(239, 68, 68, 0.3);
+}
+
+.test-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
